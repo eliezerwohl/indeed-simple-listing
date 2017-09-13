@@ -12,12 +12,21 @@ app.get('/scrape', function(req, res){
 	var $ = cheerio.load(body);
 		$('.result').filter(function(){
 			var data = $(this);
+			    console.log((data.find(".jobtitle").text().trim()))
+			if (data.find(".sponsoredGray").length == 0){
+				console.log("not sponsored")
+			}
+			else {
+				console.log("sponsored")
+			}
+
        resultArray.push((data.find(".jobtitle").text().trim()))
-       console.log((data.find(".jobtitle").text().trim()))  
+    	console.log((data.find(".summary").text().trim()))
+    	console.log(" ")
+       // console.log(data.find(".sponsoredGray").text()) 
  		})
 		res.send(resultArray)
-	})
-				
+	})		
 })
 
 app.get("/", function(req, res){
