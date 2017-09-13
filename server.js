@@ -7,11 +7,26 @@ var port = 9000;
 app.use(express.static(__dirname + '/public'));
 
 app.get('/scrape', function(req, res){
-	debugger
-	res.send("got ya")
+	var resultArray = [];
+	request('https://www.indeed.com/jobs?q=javascript%20remote&l&sort=date&ts=1505243369075&rq=1&fromage=last', function (error, response, body) {
+	var $ = cheerio.load(body);
+		$('.result').filter(function(){
+			var data = $(this);
+			    console.log((data.find(".jobtitle").text().trim()))
+			if (data.find(".sponsoredGray").length == 0){
+				console.log("not sponsored")
+			}
+			else {
+				console.log("sponsored")
+			}
 
-  //All the web scraping magic will happen here
-
+       resultArray.push((data.find(".jobtitle").text().trim()))
+    	console.log((data.find(".summary").text().trim()))
+    	console.log(" ")
+       // console.log(data.find(".sponsoredGray").text()) 
+ 		})
+		res.send(resultArray)
+	})		
 })
 
 app.get("/", function(req, res){
