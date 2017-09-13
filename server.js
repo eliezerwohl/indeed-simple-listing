@@ -10,20 +10,18 @@ app.get('/scrape', function(req, res){
 	var resultArray = [];
 	request('https://www.indeed.com/jobs?q=javascript%20remote&l&sort=date&ts=1505243369075&rq=1&fromage=last', function (error, response, body) {
 	var $ = cheerio.load(body);
+	console.log(body)
 		$('.result').filter(function(){
 			var data = $(this);
-			    console.log((data.find(".jobtitle").text().trim()))
 			if (data.find(".sponsoredGray").length == 0){
-				console.log("not sponsored")
-			}
-			else {
-				console.log("sponsored")
-			}
+				var dataObject = {
+					title:data.find(".jobtitle").text().trim(),
+					summary:data.find(".summary").text().trim(),
+					link:"indeed.com" + data.find(".turnstileLink").attr('href')
+				}
+				resultArray.push(dataObject)
 
-       resultArray.push((data.find(".jobtitle").text().trim()))
-    	console.log((data.find(".summary").text().trim()))
-    	console.log(" ")
-       // console.log(data.find(".sponsoredGray").text()) 
+			}
  		})
 		res.send(resultArray)
 	})		
