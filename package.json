@@ -4,14 +4,24 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "debug": "node --inspect server.js"
+    "debug": "node --inspect server.js",
+    "start": "nodemon server.js --exec babel-node --presets es2015,stage-2"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "babel": "^6.23.0",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.15.4",
-    "request": "^2.81.0"
+    "phantom": "^4.0.5",
+    "request": "^2.81.0",
+    "zombie": "^5.0.7"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "nodemon": "^1.12.0"
   }
 }
